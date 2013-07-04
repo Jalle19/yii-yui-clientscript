@@ -1,9 +1,9 @@
 {
-	"name": "jalle19/yii-yui-compressor",
+	"name": "jalle19/yii-yui-clientscript",
 	"type": "library",
 	"description": "Yii client script implementation which leverages the YUI compressor",
 	"keywords": ["yii", "clientscript", "js", "css", "minify", "yui"],
-	"homepage": "https://github.com/Jalle19/yii-yui-compressor",
+	"homepage": "https://github.com/Jalle19/yii-yui-clientscript",
 	"minimum-stability": "dev",
 	"require": {
 		"php": ">=5.3.0",
