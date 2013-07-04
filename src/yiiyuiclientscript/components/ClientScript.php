@@ -5,7 +5,7 @@
  *
  * @author Sam Stenvall <sam@supportersplace.com>
  */
-namespace YIIYUIClientScript\components;
+namespace yiiyuiclientscript\components;
 
 class ClientScript extends \CClientScript
 {

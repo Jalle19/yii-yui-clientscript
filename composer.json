@@ -11,7 +11,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"YIIYUIClientScript": "src/"
+			"yiiyuiclientscript": "src/"
 		}
 	}
 }

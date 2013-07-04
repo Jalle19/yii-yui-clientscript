@@ -5,7 +5,7 @@
  *
  * @author Sam Stenvall <sam@supportersplace.com>
  */
-namespace YIIYUIClientScript\exceptions;
+namespace yiiyuiclientscript\exceptions;
 
 class Exception extends \CException
 {
