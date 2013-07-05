@@ -8,6 +8,7 @@
  */
 
 namespace yiiyuiclientscript\components;
+use yiiyuiclientscript\exceptions\Exception as Exception;
 
 abstract class Combiner
 {
@@ -120,8 +121,16 @@ abstract class Combiner
 	{
 		$this->_compressor->setType($contentType);
 
-		foreach ($contents as &$content)
-			$content = $this->_compressor->compress($content);
+		// Re-throw any errors from the compressor under our own namespace
+		try
+		{
+			foreach ($contents as &$content)
+				$content = $this->_compressor->compress($content);
+		}
+		catch (\YUI\Exception $e)
+		{
+			throw new Exception('YUI compressor failed with: '.$e->getMessage(), $e->getCode(), $e);
+		}
 
 		return $contents;
 	}
