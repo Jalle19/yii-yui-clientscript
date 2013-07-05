@@ -19,6 +19,11 @@ abstract class Combiner
 	 * @var string the prefix to use for combined files
 	 */
 	protected $filePrefix;
+	
+	/**
+	 * @var array options for the YUI compressor
+	 */
+	protected $compressorOptions;
 
 	/**
 	 * @var \YUI\Compressor the YUI compressor
@@ -28,11 +33,14 @@ abstract class Combiner
 	/**
 	 * Class constructor
 	 * @param string $filePrefix the prefix for combined files
+	 * @param array $compressorOptions options for the YUI compressor
+	 * @see \YUI\Compressor
 	 */
-	public function __construct($filePrefix)
+	public function __construct($filePrefix, $compressorOptions)
 	{
 		$this->filePrefix = $filePrefix;
-		$this->_compressor = new \YUI\Compressor();
+		$this->_compressor = new \YUI\Compressor($compressorOptions);
+		$this->compressorOptions = $compressorOptions;
 	}
 
 	/**
@@ -42,15 +50,18 @@ abstract class Combiner
 	
 	/**
 	 * Determines the named of a combined file based based on the specified list 
-	 * of files. The filename varies depending on the files specified as well 
-	 * as the time the files were last modified.
+	 * of files. The filename varies depending on the files specified, the time 
+	 * the files were last modified and the compressor options used.
 	 * @param string $extension the extension to use for the file
 	 * @param array $files the files that will be combined
 	 * @return array absolute path and URL to the combined file
 	 */
 	protected function getCombinedFileProperties($extension, $files)
 	{
-		$identifier = sha1(implode($files).$this->getLastModification($files));
+		$identifier = sha1(implode($files)
+				.$this->getLastModification($files)
+				.implode($this->compressorOptions));
+		
 		$file = $this->filePrefix.'-'.$identifier.'.'.$extension;
 
 		return array(

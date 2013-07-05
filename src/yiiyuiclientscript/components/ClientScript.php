@@ -20,6 +20,13 @@ class ClientScript extends \CClientScript
 	 * @var string the file prefix for combined scripts
 	 */
 	public $combinedScriptPrefix = 'scripts';
+	
+	/**
+	 * @var array options for the YUI compressor. Defaults to an empty array, 
+	 * meaning the standard options will be used
+	 * @see \YUI\Compressor
+	 */
+	public $compressorOptions = array();
 
 	/**
 	 * @var JavaScriptCombiner reusable JavaScript combiner
@@ -54,7 +61,7 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderHead(&$output)
 	{
-		$combiner = new CSSCombiner($this->combinedCssPrefix);
+		$combiner = new CSSCombiner($this->combinedCssPrefix, $this->compressorOptions);
 		$this->cssFiles = $combiner->combine($this->cssFiles);
 
 		$this->combineScripts(self::POS_HEAD);
@@ -73,7 +80,7 @@ class ClientScript extends \CClientScript
 			if ($this->_javascriptCombiner === null)
 			{
 				$this->_javascriptCombiner = new JavaScriptCombiner(
-						$this->combinedScriptPrefix);
+						$this->combinedScriptPrefix, $this->compressorOptions);
 			}
 
 			$this->scriptFiles[$position] = $this->_javascriptCombiner->
