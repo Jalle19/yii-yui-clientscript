@@ -1,8 +1,8 @@
 {
 	"name": "jalle19/yii-yui-clientscript",
 	"type": "library",
-	"description": "Yii client script implementation which leverages the YUI compressor",
-	"keywords": ["yii", "clientscript", "js", "css", "minify", "yui"],
+	"description": "The end-all, be-all minifying client script implementation for Yii",
+	"keywords": ["yii", "yui", "clientscript", "minify", "uglify", "js", "css"],
 	"homepage": "https://github.com/Jalle19/yii-yui-clientscript",
 	"minimum-stability": "dev",
 	"require": {
