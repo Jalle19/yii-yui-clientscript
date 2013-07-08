@@ -8,7 +8,7 @@
 
 namespace yiiyuiclientscript\components;
 
-class CSSCombiner extends Combiner
+class CSSCombiner extends FileCombiner
 {
 	
 	/**

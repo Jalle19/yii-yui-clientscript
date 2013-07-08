@@ -8,7 +8,7 @@
 
 namespace yiiyuiclientscript\components;
 
-class JavaScriptCombiner extends Combiner
+class JavaScriptCombiner extends FileCombiner
 {
 	
 	/**
