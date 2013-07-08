@@ -46,11 +46,15 @@ class JavaScriptCombiner extends Combiner
 				$normalFiles[$file] = $content;
 		}
 
+		$combinedFiles = array();
+
 		// Combine strict and non-strict files separately
-		return array_merge(
-				$this->combineFiles($strictFiles), 
-				$this->combineFiles($normalFiles)
-		);
+		if (!empty($strictFiles))
+			$combinedFiles = array_merge($combinedFiles, $this->combineFiles($strictFiles));
+		if (!empty($normalFiles))
+			$combinedFiles = array_merge($combinedFiles, $this->combineFiles($normalFiles));
+
+		return $combinedFiles;
 	}
 	
 	/**
