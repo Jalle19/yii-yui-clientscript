@@ -18,17 +18,18 @@ Installation
 Use Composer to install, then add the following to your application configuration:
 
 ```
-'aliases'=>array(
-		// change this path if necessary
-		'yiiyuiclientscript'=>realpath(__DIR__.'/../../vendor/jalle19/yii-yui-clientscript/src/yiiyuiclientscript'),
-		...
-),
+// change this path if necessary
+Yii::setPathOfAlias('yiiyuiclientscript', realpath(__DIR__.'/../../vendor/jalle19/yii-yui-clientscript/src/yiiyuiclientscript'));
 ...
-'components'=>array(
+return array(
+	...
+	'components'=>array(
+		...
 		'clientScript'=>array(
 			'class'=>'yiiyuiclientscript\components\ClientScript',
 		),
 		...
+	),
 ),
 
 ```
