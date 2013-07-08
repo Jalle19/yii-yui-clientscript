@@ -54,7 +54,8 @@ class JavaScriptCombiner extends Combiner
 		if (!empty($normalFiles))
 			$combinedFiles = array_merge($combinedFiles, $this->combineFiles($normalFiles));
 
-		return $combinedFiles;
+		// Finally, merge the external scripts as is
+		return array_merge($externalScripts, $combinedFiles);
 	}
 	
 	/**
