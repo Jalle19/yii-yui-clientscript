@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Combines and compresses all registered CSS and script files.
+ * Combines and compresses all registered CSS files and scripts (both files and 
+ * inline scripts).
  *
  * @author Sam Stenvall <sam@supportersplace.com>
  */
@@ -92,7 +93,6 @@ class ClientScript extends \CClientScript
 					combine($this->scriptFiles[$position]);
 		}
 
-		// Combine inline scripts
 		$this->combineInlineScripts($position);
 	}
 
