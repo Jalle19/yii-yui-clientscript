@@ -91,11 +91,26 @@ abstract class FileCombiner extends Combiner
 		if (!strncmp($url, $baseUrl, strlen($baseUrl)))
 		{
 			$basePath = dirname(\Yii::app()->request->scriptFile).DIRECTORY_SEPARATOR;
-			$url = $basePath.substr($url, strlen($baseUrl));
-			return $url;
+			$path = $basePath.substr($url, strlen($baseUrl));
+			return $this->assertFileExists($path);
 		}
 
 		return false;
+	}
+
+	/**
+	 * Checks if the specified file exists and returns the parameter as is if 
+	 * it exists, otherwise an exception is thrown
+	 * @param string $file the absolute path to the file
+	 * @return string the absolute path to the file
+	 * @throws Exception if the file doesn't exist
+	 */
+	private function assertFileExists($file)
+	{
+		if (!file_exists($file))
+			throw new Exception('Unable to combine files, '.$file.' does not exist');
+
+		return $file;
 	}
 
 }
