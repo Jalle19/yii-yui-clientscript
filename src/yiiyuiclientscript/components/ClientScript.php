@@ -52,7 +52,8 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderBodyEnd(&$output)
 	{
-		$this->combineScripts(self::POS_END);
+		$this->combineScripts(array(
+			self::POS_END, self::POS_LOAD, self::POS_READY));
 
 		parent::renderBodyEnd($output);
 	}
@@ -72,28 +73,35 @@ class ClientScript extends \CClientScript
 	}
 
 	/**
-	 * Combines the scripts at the specified position
-	 * @param int $position the position (@see CClientScript)
+	 * Combines the scripts at the specified positions
+	 * @param mixed $position a single position specified as an integer, or 
+	 * multiple positions specified as an array of integers.
 	 */
-	private function combineScripts($position)
+	private function combineScripts($positions)
 	{
 		if (!$this->enableJavaScript)
 			return;
-
-		// Combine and compress script files
-		if (isset($this->scriptFiles[$position]))
+		
+		if (!is_array($positions))
+			$positions = array($positions);
+		
+		foreach($positions as $position) 
 		{
-			if ($this->_javascriptCombiner === null)
+			// Combine and compress script files
+			if (isset($this->scriptFiles[$position]))
 			{
-				$this->_javascriptCombiner = new JavaScriptCombiner(
-						$this->combinedScriptPrefix, $this->compressorOptions);
+				if ($this->_javascriptCombiner === null)
+				{
+					$this->_javascriptCombiner = new JavaScriptCombiner(
+							$this->combinedScriptPrefix, $this->compressorOptions);
+				}
+
+				$this->scriptFiles[$position] = $this->_javascriptCombiner->
+						combine($this->scriptFiles[$position]);
 			}
 
-			$this->scriptFiles[$position] = $this->_javascriptCombiner->
-					combine($this->scriptFiles[$position]);
+			$this->combineInlineScripts($position);
 		}
-
-		$this->combineInlineScripts($position);
 	}
 
 	/**
