@@ -33,6 +33,8 @@ Use Composer to install, then add the following to your application configuratio
 
 ```
 
+You'll also need to include the Composer autoloader in your bootstrap script. Usually this can be done using `require_once('vendor/autoload.php');`.
+
 Configuration
 -------------
 
