@@ -10,6 +10,7 @@ Features
 * uses the native Java-based YUI compressor instead of one of the countless more-or-less unmaintained ports of it
 * detects global strict mode in JavaScript files and combines such scripts separately from standard scripts
 * uses unique filenames for the combined files, meaning you won't have to manually implement cache-busting
+* compresses not just script files but also all inline scripts
 
 Installation
 ------------
