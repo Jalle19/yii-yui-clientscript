@@ -17,7 +17,7 @@ Installation
 
 Use Composer to install, then add the following to your application configuration:
 
-```
+```php
 // change this path if necessary
 Yii::setPathOfAlias('yiiyuiclientscript', realpath(__DIR__.'/../../vendor/jalle19/yii-yui-clientscript/src/yiiyuiclientscript'));
 ...
@@ -30,6 +30,7 @@ return array(
 		),
 		...
 	),
+	...
 ),
 
 ```
@@ -41,20 +42,26 @@ Configuration
 
 See the documentation for [php-yui-compressor](https://github.com/Jalle19/php-yui-compressor) for which options are available for the YUI compressor. The options are specified by "compressorOptions" in the component configuration, e.g.:
 
-```
-'components'=>array(
-		'clientScript'=>array(
-			'class'=>'yiiyuiclientscript\components\ClientScript',
-			'compressorOptions'=>array(
-				'line-break'=>80,
-				'disable-optimizations'=>true,
-			)
-		),
-		...
+```php
+...
+return array(
+	...
+	'components'=>array(
+			...
+			'clientScript'=>array(
+				'class'=>'yiiyuiclientscript\components\ClientScript',
+				'compressorOptions'=>array(
+					'line-break'=>80,
+					'disable-optimizations'=>true,
+				)
+			),
+			...
+	),
+	...
 ),
 ```
 
 License
 -------
 
-TODO
+This code is licensed under the [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
