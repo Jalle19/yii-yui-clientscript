@@ -8,6 +8,7 @@
  */
 
 namespace yiiyuiclientscript\components;
+use yiiyuiclientscript\exceptions\Exception as Exception;
 
 abstract class FileCombiner extends Combiner
 {
