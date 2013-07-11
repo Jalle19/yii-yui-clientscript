@@ -4,6 +4,7 @@
  * Base class for combiners that operate on files.
  *
  * @author Sam Stenvall <sam@supportersplace.com>
+ * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace yiiyuiclientscript\components;
