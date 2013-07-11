@@ -5,6 +5,7 @@
 	"keywords": ["yii", "yui", "clientscript", "minify", "uglify", "js", "css"],
 	"homepage": "https://github.com/Jalle19/yii-yui-clientscript",
 	"minimum-stability": "dev",
+	"license": "BSD-2-Clause",
 	"require": {
 		"php": ">=5.3.0",
 		"jalle19/php-yui-compressor": "dev-master"
