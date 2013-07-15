@@ -117,7 +117,7 @@ class ClientScript extends \CClientScript
 		if (!isset($this->scripts[$position]))
 			return;
 
-		$scriptHash = md5(serialize($this->scripts[$position]));
+		$scriptHash = md5(serialize(array_values($this->scripts[$position])));
 		$combinedScript = \Yii::app()->assetManager->basePath
 				.'/'.$this->combinedScriptPrefix
 				.'-'.$scriptHash.'.js';
