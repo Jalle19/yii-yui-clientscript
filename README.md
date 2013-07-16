@@ -10,7 +10,7 @@ Features
 * uses the native Java-based YUI compressor instead of one of the countless more-or-less unmaintained ports of it
 * detects global strict mode in JavaScript files and combines such scripts separately from standard scripts
 * uses unique filenames for the combined files, meaning you won't have to manually implement cache-busting
-* compresses not just script files but also all inline scripts
+* compresses inline scripts too
 
 Installation
 ------------
@@ -60,6 +60,30 @@ return array(
 	...
 ),
 ```
+
+### Excluding files
+
+Sometimes you may want to combine and compress all files but one (perhaps because it changes too often causing all scripts to need re-combination). You can specify a pattern that matches these files using the "exclude" option:
+
+```php
+...
+return array(
+	...
+	'components'=>array(
+			...
+			'clientScript'=>array(
+				'class'=>'yiiyuiclientscript\components\ClientScript',
+				'exclude'=>array(
+					'MainMenu'
+				),
+			),
+			...
+	),
+	...
+),
+```
+
+The pattern matching is done using `strpos()` on the script URL, meaning in the example above the script `MainMenu-typeahead-1.js` (and naturally all other scripts having "MainMenu" in their name) would be registered separately.
 
 License
 -------
