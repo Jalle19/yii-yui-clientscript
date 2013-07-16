@@ -30,6 +30,23 @@ class ClientScript extends \CClientScript
 	 * @see \YUI\Compressor
 	 */
 	public $compressorOptions = array();
+	
+	/**
+	 * @var array URL patterns that should be excluded (left totally untouched) 
+	 * from the minification process.
+	 * 
+	 * This can be useful on scripts that change often (e.g. typeahead data) 
+	 * since compressing scripts is a very expensive task. The mechanism works 
+	 * for CSS files too.
+	 * 
+	 * The matching is done using strpos(), e.g. "MainMenu" would match a 
+	 * script named /fi/assets/MainMenu-typeahead-1.js, meaning it would get 
+	 * registered separately from the combined and compressed scripts.
+	 * 
+	 * Defaults to an empty array, meaning everything will be combined and 
+	 * compressed
+	 */
+	public $exclude = array();
 
 	/**
 	 * @var JavaScriptCombiner reusable JavaScript combiner
@@ -65,7 +82,8 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderHead(&$output)
 	{
-		$combiner = new CSSCombiner($this->combinedCssPrefix, $this->compressorOptions);
+		$combiner = new CSSCombiner($this->combinedCssPrefix, 
+				$this->compressorOptions, $this->exclude);
 		$this->cssFiles = $combiner->combine($this->cssFiles);
 
 		$this->combineScripts(self::POS_HEAD);
@@ -94,7 +112,9 @@ class ClientScript extends \CClientScript
 				if ($this->_javascriptCombiner === null)
 				{
 					$this->_javascriptCombiner = new JavaScriptCombiner(
-							$this->combinedScriptPrefix, $this->compressorOptions);
+							$this->combinedScriptPrefix, 
+							$this->compressorOptions, 
+							$this->exclude);
 				}
 
 				$this->scriptFiles[$position] = $this->_javascriptCombiner->

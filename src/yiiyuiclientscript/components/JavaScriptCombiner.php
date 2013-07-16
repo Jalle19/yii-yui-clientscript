@@ -20,19 +20,19 @@ class JavaScriptCombiner extends FileCombiner
 	public function combine($files)
 	{
 		// Store the contents of all local scripts in an array (which we'll 
-		// combine later) and store external scripts in an other array which 
+		// combine later) and store untouched scripts in an other array which 
 		// will remain untouched.
-		$externalScripts = array();
+		$untouchedScripts = array();
 		$contents = array();
 
 		foreach ($files as $url)
 		{
 			$file = $this->resolveAssetPath($url);
 
-			if ($file !== false)
+			if ($file !== false && !$this->shouldExclude($url))
 				$contents[$file] = file_get_contents($file);
 			else
-				$externalScripts[$url] = $url;
+				$untouchedScripts[$url] = $url;
 		}
 
 		// Detect files that use global strict mode
@@ -55,8 +55,8 @@ class JavaScriptCombiner extends FileCombiner
 		if (!empty($normalFiles))
 			$combinedFiles = array_merge($combinedFiles, $this->combineFiles($normalFiles));
 
-		// Finally, merge the external scripts as is
-		return array_merge($externalScripts, $combinedFiles);
+		// Finally, merge the untouched scripts as is
+		return array_merge($untouchedScripts, $combinedFiles);
 	}
 	
 	/**

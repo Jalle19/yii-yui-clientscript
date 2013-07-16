@@ -30,19 +30,19 @@ class CSSCombiner extends FileCombiner
 		// Produce one file for each media type
 		foreach ($cssFiles as $media=> $files)
 		{
-			// Get the contents of all local CSS files and store the external ones
-			// in a separate array
-			$externalFiles = array();
+			// Get the contents of all local CSS files and store the external 
+			// and excluded ones in a separate array
+			$untouchedFiles = array();
 			$contents = array();
 
 			foreach ($files as $url)
 			{
 				$file = $this->resolveAssetPath($url);
 
-				if ($file !== false)
+				if ($file !== false && !$this->shouldExclude($url))
 					$contents[$file] = $this->remapCssUrls(file_get_contents($file), $url);
 				else
-					$externalFiles[$url] = $url;
+					$untouchedFiles[$url] = $url;
 			}
 
 			$combinedProps = $this->getCombinedFileProperties(
@@ -55,8 +55,8 @@ class CSSCombiner extends FileCombiner
 						$this->compress(\YUI\Compressor::TYPE_CSS, $contents)));
 			}
 
-			foreach ($externalFiles as $externalFile)
-				$combinedFiles[$externalFile] = $media;
+			foreach ($untouchedFiles as $untouchedFile)
+				$combinedFiles[$untouchedFile] = $media;
 
 			$combinedFiles[$combinedProps['url']] = $media;
 		}

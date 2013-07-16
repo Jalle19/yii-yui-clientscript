@@ -24,14 +24,15 @@ abstract class FileCombiner extends Combiner
 	/**
 	 * Class constructor
 	 * @param string $filePrefix the prefix for combined files
+	 * @param array URL patterns to exclude
 	 * @param array $compressorOptions options for the YUI compressor
 	 * @see \YUI\Compressor
 	 */
-	public function __construct($filePrefix, $compressorOptions)
+	public function __construct($filePrefix, $compressorOptions, $exclude)
 	{
 		$this->filePrefix = $filePrefix;
 		
-		parent::__construct($compressorOptions);
+		parent::__construct($compressorOptions, $exclude);
 	}
 
 	/**

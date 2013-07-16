@@ -18,6 +18,11 @@ class Combiner
 	 * @var array options for the YUI compressor
 	 */
 	protected $compressorOptions;
+	
+	/**
+	 * @var array URL patterns to exclude
+	 */
+	protected $exclude;
 
 	/**
 	 * @var \YUI\Compressor the YUI compressor
@@ -27,12 +32,14 @@ class Combiner
 	/**
 	 * Class constructor
 	 * @param array $compressorOptions options for the YUI compressor
+	 * @param array URL patterns to exclude
 	 * @see \YUI\Compressor
 	 */
-	public function __construct($compressorOptions)
+	public function __construct($compressorOptions, $exclude)
 	{
 		$this->compressor = new \YUI\Compressor($compressorOptions);
 		$this->compressorOptions = $compressorOptions;
+		$this->exclude = $exclude;
 	}
 
 	/**
@@ -58,6 +65,21 @@ class Combiner
 		}
 
 		return $contents;
+	}
+	
+	/**
+	 * Checks whether the contents from the specified URL should be excluded 
+	 * from the minification process
+	 * @param string $url the URL to the file
+	 * @return boolean
+	 */
+	protected function shouldExclude($url)
+	{
+		foreach ($this->exclude as $needle)
+			if (strpos($url, $needle) !== false)
+				return true;
+
+		return false;
 	}
 
 }
