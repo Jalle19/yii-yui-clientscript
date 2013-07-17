@@ -32,10 +32,10 @@ class Combiner
 	/**
 	 * Class constructor
 	 * @param array $compressorOptions options for the YUI compressor
-	 * @param array URL patterns to exclude
+	 * @param array URL patterns to exclude. Defaults to an empty array.
 	 * @see \YUI\Compressor
 	 */
-	public function __construct($compressorOptions, $exclude)
+	public function __construct($compressorOptions, $exclude = array())
 	{
 		$this->compressor = new \YUI\Compressor($compressorOptions);
 		$this->compressorOptions = $compressorOptions;
