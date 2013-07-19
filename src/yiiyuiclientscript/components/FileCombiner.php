@@ -89,16 +89,13 @@ abstract class FileCombiner extends Combiner
 	 */
 	protected function resolveAssetPath($url)
 	{
-		$baseUrl = \Yii::app()->request->baseUrl.'/';
-
-		if (!strncmp($url, $baseUrl, strlen($baseUrl)))
-		{
-			$basePath = dirname(\Yii::app()->request->scriptFile).DIRECTORY_SEPARATOR;
-			$path = $basePath.substr($url, strlen($baseUrl));
-			return $this->assertFileExists($path);
-		}
-
-		return false;
+		// Check if the script is external
+		foreach (array('http', 'https', '//') as $startsWith)
+			if (strpos($url, $startsWith) === 0)
+				return false;
+			
+		$assetPath = $_SERVER['DOCUMENT_ROOT'].$url;
+		return $this->assertFileExists($assetPath);
 	}
 
 	/**
