@@ -90,11 +90,11 @@ abstract class FileCombiner extends Combiner
 	protected function resolveAssetPath($url)
 	{
 		// Check if the script is external
-		foreach (array('http', 'https', '//') as $startsWith)
+		foreach (array('http', 'https', '//', '/~') as $startsWith)
 			if (strpos($url, $startsWith) === 0)
 				return false;
 			
-		$assetPath = $_SERVER['DOCUMENT_ROOT'].$url;
+		$assetPath = \Yii::getPathOfAlias('webroot').$url;
 		return $this->assertFileExists($assetPath);
 	}
 
