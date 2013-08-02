@@ -40,7 +40,10 @@ class CSSCombiner extends FileCombiner
 				$file = $this->resolveAssetPath($url);
 
 				if ($file !== false && !$this->shouldExclude($url))
-					$contents[$file] = $this->remapCssUrls(file_get_contents($file), $url);
+					if (\Yii::app()->clientScript->remapCssUrls)
+						$contents[$file] = $this->remapCssUrls(file_get_contents($file), $url);
+					else
+						$contents[$file] = file_get_contents($file);
 				else
 					$untouchedFiles[$url] = $url;
 			}
