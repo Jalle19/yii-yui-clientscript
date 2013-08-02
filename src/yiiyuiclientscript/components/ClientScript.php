@@ -9,7 +9,9 @@
  */
 
 namespace yiiyuiclientscript\components;
+
 use yiiyuiclientscript\exceptions\Exception as Exception;
+use yiiyuiclientscript\interfaces\PathResolver;
 
 class ClientScript extends \CClientScript
 {
@@ -23,6 +25,11 @@ class ClientScript extends \CClientScript
 	 * @var string the file prefix for combined scripts
 	 */
 	public $combinedScriptPrefix = 'scripts';
+
+	/**
+	 * @var PathResolver the path resolver for getting files path in server
+	 */
+	public $pathResolver;
 	
 	/**
 	 * @var array options for the YUI compressor. Defaults to an empty array, 
@@ -82,8 +89,11 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderHead(&$output)
 	{
-		$combiner = new CSSCombiner($this->combinedCssPrefix, 
-				$this->compressorOptions, $this->exclude);
+		$combiner = new CSSCombiner(
+				$this->combinedCssPrefix,
+				$this->getPathResolver(),
+				$this->compressorOptions,
+				$this->exclude);
 		$this->cssFiles = $combiner->combine($this->cssFiles);
 
 		$this->combineScripts(self::POS_HEAD);
@@ -112,8 +122,9 @@ class ClientScript extends \CClientScript
 				if ($this->_javascriptCombiner === null)
 				{
 					$this->_javascriptCombiner = new JavaScriptCombiner(
-							$this->combinedScriptPrefix, 
-							$this->compressorOptions, 
+							$this->combinedScriptPrefix,
+							$this->getPathResolver(),
+							$this->compressorOptions,
 							$this->exclude);
 				}
 
@@ -159,4 +170,18 @@ class ClientScript extends \CClientScript
 			$scriptHash=>file_get_contents($combinedScript));
 	}
 
+	/**
+	 * Returns path resolver for getting files path in server
+	 * @return PathResolver
+	 */
+	private function getPathResolver()
+	{
+		if (is_string($this->pathResolver)) {
+			$class = $this->pathResolver;
+			$this->pathResolver = new $class();
+		} elseif (!$this->pathResolver)
+			$this->pathResolver = new BasePathResolver();
+
+		return $this->pathResolver;
+	}
 }

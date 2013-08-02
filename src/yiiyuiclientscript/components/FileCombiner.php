@@ -8,7 +8,9 @@
  */
 
 namespace yiiyuiclientscript\components;
+
 use yiiyuiclientscript\exceptions\Exception as Exception;
+use yiiyuiclientscript\interfaces\PathResolver;
 
 abstract class FileCombiner extends Combiner
 {
@@ -20,18 +22,25 @@ abstract class FileCombiner extends Combiner
 	 * @var string the prefix to use for combined files
 	 */
 	protected $filePrefix;
-	
+
+	/**
+	 * @var PathResolver
+	 */
+	protected $pathResolver;
+
 	/**
 	 * Class constructor
 	 * @param string $filePrefix the prefix for combined files
+	 * @param PathResolver $pathResolver path resolver
 	 * @param array URL patterns to exclude
 	 * @param array $compressorOptions options for the YUI compressor
 	 * @see \YUI\Compressor
 	 */
-	public function __construct($filePrefix, $compressorOptions, $exclude)
+	public function __construct($filePrefix, PathResolver $pathResolver, $compressorOptions, $exclude)
 	{
 		$this->filePrefix = $filePrefix;
-		
+		$this->pathResolver = $pathResolver;
+
 		parent::__construct($compressorOptions, $exclude);
 	}
 
@@ -89,13 +98,11 @@ abstract class FileCombiner extends Combiner
 	 */
 	protected function resolveAssetPath($url)
 	{
-		// Check if the script is external
-		foreach (array('http', 'https', '//') as $startsWith)
-			if (strpos($url, $startsWith) === 0)
-				return false;
-			
-		$assetPath = $_SERVER['DOCUMENT_ROOT'].$url;
-		return $this->assertFileExists($assetPath);
+		$result = $this->pathResolver->resolveAssetPath($url);
+		if ($result)
+			return $this->assertFileExists($result);
+		else
+            return false;
 	}
 
 	/**
