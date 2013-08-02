@@ -124,9 +124,9 @@ class MyPathResolver implements \yiiyuiclientscript\interfaces\PathResolver
 }
 ```
 
-### Turn of remap CSS urls
+### Turn off remapping of CSS URLs
 
-Sometimes your project structure do not require remapping CSS urls, you can turn it off.
+The default behavior is to remap relative URLs in CSS files to compensate for the fact that the generated combined file will likely be in a different location than the original file. Sometimes though, your project structure does not require any remapping, so you can turn it off:
 
 ```php
 ...
