@@ -124,6 +124,26 @@ class MyPathResolver implements \yiiyuiclientscript\interfaces\PathResolver
 }
 ```
 
+### Turn of remap CSS urls
+
+Sometimes your project structure do not require remapping CSS urls, you can turn it off.
+
+```php
+...
+return array(
+	...
+	'components'=>array(
+			...
+			'clientScript'=>array(
+				'class'=>'yiiyuiclientscript\components\ClientScript',
+				'remapCssUrls'=>false,
+			),
+			...
+	),
+	...
+),
+```
+
 License
 -------
 

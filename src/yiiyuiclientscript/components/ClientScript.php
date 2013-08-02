@@ -37,7 +37,12 @@ class ClientScript extends \CClientScript
 	 * @see \YUI\Compressor
 	 */
 	public $compressorOptions = array();
-	
+
+	/**
+	 * @var boolean set whether to use css url remap
+	 */
+	public $remapCssUrls = true;
+
 	/**
 	 * @var array URL patterns that should be excluded (left totally untouched) 
 	 * from the minification process.
