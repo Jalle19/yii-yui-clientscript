@@ -176,10 +176,12 @@ class ClientScript extends \CClientScript
 	 */
 	private function getPathResolver()
 	{
-		if (is_string($this->pathResolver)) {
+		if (is_string($this->pathResolver))
+		{
 			$class = $this->pathResolver;
 			$this->pathResolver = new $class();
-		} elseif (!$this->pathResolver)
+		}
+		elseif (!$this->pathResolver)
 			$this->pathResolver = new BasePathResolver();
 
 		return $this->pathResolver;
