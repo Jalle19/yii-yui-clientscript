@@ -85,7 +85,9 @@ return array(
 
 The pattern matching is done using `strpos()` on the script URL, meaning in the example above the script `MainMenu-typeahead-1.js` (and naturally all other scripts having "MainMenu" in their name) would be registered separately.
 
-### Adding own file resolver
+### Using a custom file resolver
+
+A registered script URL must be converted internally to the absolute path to the file in question. Depending on your project layout the default implementation may not do the trick. In that case you'll need to define your own path resolver:
 
 ```php
 ...
@@ -103,7 +105,8 @@ return array(
 ),
 ```
 
-MyPathResolver.php example:
+Example implementation (see the interface for more details):
+
 ```php
 <?php
 

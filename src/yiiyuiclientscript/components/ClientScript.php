@@ -27,7 +27,7 @@ class ClientScript extends \CClientScript
 	public $combinedScriptPrefix = 'scripts';
 
 	/**
-	 * @var PathResolver the path resolver for getting files path in server
+	 * @var PathResolver resolver to use for resolving file paths
 	 */
 	public $pathResolver;
 	
@@ -171,7 +171,7 @@ class ClientScript extends \CClientScript
 	}
 
 	/**
-	 * Returns path resolver for getting files path in server
+	 * Returns the path resolver to use for resolving file paths
 	 * @return PathResolver
 	 */
 	private function getPathResolver()

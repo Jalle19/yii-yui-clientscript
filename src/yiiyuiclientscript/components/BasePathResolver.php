@@ -5,7 +5,7 @@ namespace yiiyuiclientscript\components;
 use yiiyuiclientscript\interfaces\PathResolver;
 
 /**
- * Path resolver
+ * Default path resolver
  *
  * @author Sam Stenvall <sam@supportersplace.com>
  * @author Peter Buri <peter.buri@netpositive.hu>
