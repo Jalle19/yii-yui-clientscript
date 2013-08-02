@@ -85,6 +85,42 @@ return array(
 
 The pattern matching is done using `strpos()` on the script URL, meaning in the example above the script `MainMenu-typeahead-1.js` (and naturally all other scripts having "MainMenu" in their name) would be registered separately.
 
+### Adding own file resolver
+
+```php
+...
+return array(
+	...
+	'components'=>array(
+			...
+			'clientScript'=>array(
+				'class'=>'yiiyuiclientscript\components\ClientScript',
+				'pathResolver'=>'\MyPathResolver'
+			),
+			...
+	),
+	...
+),
+```
+
+MyPathResolver.php example:
+```php
+<?php
+
+class MyPathResolver implements \yiiyuiclientscript\interfaces\PathResolver
+{
+	public function resolveAssetPath($url)
+	{
+		// Check if the script is external
+		foreach (array('http', 'https', '//') as $startsWith)
+			if (strpos($url, $startsWith) === 0)
+				return false;
+
+		return \Yii::getPathOfAlias('webroot').$url;
+	}
+}
+```
+
 License
 -------
 
