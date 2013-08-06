@@ -32,16 +32,13 @@ abstract class FileCombiner extends Combiner
 	 * Class constructor
 	 * @param string $filePrefix the prefix for combined files
 	 * @param PathResolver $pathResolver path resolver
-	 * @param array URL patterns to exclude
-	 * @param array $compressorOptions options for the YUI compressor
-	 * @see \YUI\Compressor
 	 */
-	public function __construct($filePrefix, PathResolver $pathResolver, $compressorOptions, $exclude)
+	public function __construct($filePrefix, PathResolver $pathResolver)
 	{
 		$this->filePrefix = $filePrefix;
 		$this->pathResolver = $pathResolver;
 
-		parent::__construct($compressorOptions, $exclude);
+		parent::__construct();
 	}
 
 	/**
@@ -61,7 +58,7 @@ abstract class FileCombiner extends Combiner
 	{
 		$identifier = sha1(implode($files)
 				.$this->getLastModification($files)
-				.implode($this->compressorOptions));
+				.implode(\Yii::app()->clientScript->compressorOptions));
 		
 		$file = $this->filePrefix.'-'.$identifier.'.'.$extension;
 

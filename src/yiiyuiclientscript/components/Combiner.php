@@ -15,31 +15,18 @@ class Combiner
 {
 
 	/**
-	 * @var array options for the YUI compressor
-	 */
-	protected $compressorOptions;
-	
-	/**
-	 * @var array URL patterns to exclude
-	 */
-	protected $exclude;
-
-	/**
 	 * @var \YUI\Compressor the YUI compressor
 	 */
 	protected $compressor;
 
 	/**
-	 * Class constructor
-	 * @param array $compressorOptions options for the YUI compressor
-	 * @param array URL patterns to exclude. Defaults to an empty array.
+	 * Class constructor. It initializes the YUI compressor.
 	 * @see \YUI\Compressor
 	 */
-	public function __construct($compressorOptions, $exclude = array())
+	public function __construct()
 	{
+		$compressorOptions = \Yii::app()->clientScript->compressorOptions;
 		$this->compressor = new \YUI\Compressor($compressorOptions);
-		$this->compressorOptions = $compressorOptions;
-		$this->exclude = $exclude;
 	}
 
 	/**
@@ -75,7 +62,7 @@ class Combiner
 	 */
 	protected function shouldExclude($url)
 	{
-		foreach ($this->exclude as $needle)
+		foreach (\Yii::app()->clientScript->exclude as $needle)
 			if (strpos($url, $needle) !== false)
 				return true;
 

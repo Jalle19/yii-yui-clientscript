@@ -94,11 +94,8 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderHead(&$output)
 	{
-		$combiner = new CSSCombiner(
-				$this->combinedCssPrefix,
-				$this->getPathResolver(),
-				$this->compressorOptions,
-				$this->exclude);
+		$combiner = new CSSCombiner($this->combinedCssPrefix, 
+				$this->getPathResolver());
 		$this->cssFiles = $combiner->combine($this->cssFiles);
 
 		$this->combineScripts(self::POS_HEAD);
@@ -128,9 +125,7 @@ class ClientScript extends \CClientScript
 				{
 					$this->_javascriptCombiner = new JavaScriptCombiner(
 							$this->combinedScriptPrefix,
-							$this->getPathResolver(),
-							$this->compressorOptions,
-							$this->exclude);
+							$this->getPathResolver());
 				}
 
 				$this->scriptFiles[$position] = $this->_javascriptCombiner->
@@ -161,7 +156,7 @@ class ClientScript extends \CClientScript
 		// Create a compressed version of the scripts if it doesn't exist
 		if (!file_exists($combinedScript))
 		{
-			$combiner = new Combiner($this->compressorOptions);
+			$combiner = new Combiner();
 
 			$contents = $combiner->compress(
 					\YUI\Compressor::TYPE_JS, $this->scripts[$position]);
