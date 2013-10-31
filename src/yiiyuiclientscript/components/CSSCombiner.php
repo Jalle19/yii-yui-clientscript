@@ -50,6 +50,10 @@ class CSSCombiner extends FileCombiner
 
 			$combinedProps = $this->getCombinedFileProperties(
 					self::FILE_EXT_CSS, array_keys($contents));
+			
+			// Extract @import statements and prepend them to the contents
+			$importContent = $this->extractImports($contents);
+			array_unshift($contents, $importContent);
 
 			// Check if we need to perform combination
 			if (!file_exists($combinedProps['path']))
@@ -65,6 +69,31 @@ class CSSCombiner extends FileCombiner
 		}
 
 		return $combinedFiles;
+	}
+	
+	/**
+	 * Extracts any @import statements from the contents and returns them as a 
+	 * single string. The original contents will be modified to exclude the 
+	 * extracted statements.
+	 * @param array $contents the contents
+	 * @return string the @import statements
+	 */
+	private function extractImports(&$contents)
+	{
+		$importStatements = array();
+
+		foreach ($contents as &$content)
+		{
+			preg_match_all('/@import(.*);/i', $content, $imports);
+
+			foreach ($imports[0] as $importStatement)
+			{
+				$importStatements[] = $importStatement;
+				$content = str_replace($importStatement, '', $content);
+			}
+		}
+
+		return implode(PHP_EOL, $importStatements);
 	}
 
 	/**

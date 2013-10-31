@@ -9,6 +9,7 @@ Features
 * drop-in replacement for the standard CClientScript (no changes to the way you register scripts and stylesheets)
 * uses the native Java-based YUI compressor instead of one of the countless more-or-less unmaintained ports of it
 * detects global strict mode in JavaScript files and combines such scripts separately from standard scripts
+* extracts `@import url("");` (e.g. Google Font imports) statements and prepends them in the combined output to ensure they work correctly
 * uses unique filenames for the combined files, meaning you won't have to manually implement cache-busting
 * compresses inline scripts too
 
