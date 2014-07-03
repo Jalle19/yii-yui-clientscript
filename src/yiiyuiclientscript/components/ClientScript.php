@@ -15,6 +15,16 @@ use yiiyuiclientscript\interfaces\PathResolver;
 
 class ClientScript extends \CClientScript
 {
+	
+	/**
+	 * @var boolean whether to combine and compress stylesheets. Default to true.
+	 */
+	public $combineStyles = true;
+	
+	/**
+	 * @var boolean whether to combine and compress scripts. Default to true.
+	 */
+	public $combineScripts = true;
 
 	/**
 	 * @var string the file prefix for combined stylesheets
@@ -71,7 +81,8 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderBodyBegin(&$output)
 	{
-		$this->combineScripts(self::POS_BEGIN);
+		if ($this->combineScripts)
+			$this->combineScripts(self::POS_BEGIN);
 
 		parent::renderBodyBegin($output);
 	}
@@ -82,8 +93,11 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderBodyEnd(&$output)
 	{
-		$this->combineScripts(array(
-			self::POS_END, self::POS_LOAD, self::POS_READY));
+		if ($this->combineScripts)
+		{
+			$this->combineScripts(array(
+				self::POS_END, self::POS_LOAD, self::POS_READY));
+		}
 
 		parent::renderBodyEnd($output);
 	}
@@ -94,11 +108,15 @@ class ClientScript extends \CClientScript
 	 */
 	public function renderHead(&$output)
 	{
-		$combiner = new CSSCombiner($this->combinedCssPrefix, 
-				$this->getPathResolver());
-		$this->cssFiles = $combiner->combine($this->cssFiles);
+		if ($this->combineStyles)
+		{
+			$combiner = new CSSCombiner($this->combinedCssPrefix, 
+					$this->getPathResolver());
+			$this->cssFiles = $combiner->combine($this->cssFiles);
+		}
 
-		$this->combineScripts(self::POS_HEAD);
+		if ($this->combineScripts)
+			$this->combineScripts(self::POS_HEAD);
 
 		parent::renderHead($output);
 	}
