@@ -105,7 +105,7 @@ class ClientScript extends \CClientScript
 
 	/**
 	 * Combines the scripts at the specified positions
-	 * @param mixed $position a single position specified as an integer, or 
+	 * @param mixed $positions a single position specified as an integer, or 
 	 * multiple positions specified as an array of integers.
 	 */
 	private function combineScripts($positions)
